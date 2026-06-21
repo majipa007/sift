@@ -48,6 +48,7 @@ When the user clicks a category, list its emails.
 
 - Query: `user_id = ? AND classification = bucket AND status = ?` (default `status=NEW`).
 - Returns list items: `id, sender, subject, snippet, classify_reason, priority, received_at, status`.
+- UI note: `classify_reason` is for a secondary hint or detail annotation, not for the main list row body. The main list should stay dense.
 - **Does NOT return draft text** — lists are cheap; drafts load on open.
 
 **Optional pre-draft optimization (Important only):** when this returns the Important list, kick off background drafting for the **top 2-3** by priority so the likely clicks feel instant. Fire-and-forget; don't block the list response. Skip if you're tight on time — lazy-on-open works fine.
@@ -91,6 +92,8 @@ Body: `{ "instruction": "make it more formal, mention I'm out Friday" }`
 4. Return the new draft.
 
 > One call per click. No looping, no growing chat history. It's a tool, not a conversation. Keep thread context server-side so the tweak doesn't lose the plot.
+
+> `version` is an internal overwrite counter in v1, not a promise of user-visible version browsing. Do not build prev/next draft-history controls unless you also add a history API.
 
 ### `POST /emails/{id}/reply`  *(FYI escape-hatch only)*
 For when classification was wrong and an FYI actually needs a response. Generates a first draft on demand (same logic as the IMP open path), sets `status=DRAFTED`. After this, the email behaves like an Important one (send / redraft available). Keeps FYI lean by default but never traps the user.

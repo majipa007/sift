@@ -41,9 +41,11 @@ This screen *is* a demo beat. Keep it clean and quick to fill on camera.
 
 **Detail pane behaves per bucket:**
 
-- **Needs Reply:** original email on top, agent draft below, action row at bottom.
+- **Needs Reply:** a short **"Why Sift surfaced this"** annotation first, then the original email, then a prominent re-draft instruction input, then the agent draft. Keep a **sticky bottom action bar** so Send / Archive never fall below the fold.
 - **FYI:** original email only, read-only. Maybe a one-line "why this is FYI" from the classifier. No actions except "mark done / dismiss".
 - **Junk:** original email, plus a single **Archive** suggestion. (Archive, not delete — destructive actions are a demo risk and "is this spam" is a boring solved problem. Don't make deletion your headline.)
+
+**List density:** keep queue rows compact enough to scan at 10-20 items. Default row = sender + subject + single-line snippet. `classify_reason` is secondary metadata, not the primary preview.
 
 ---
 
@@ -59,7 +61,7 @@ This screen *is* a demo beat. Keep it clean and quick to fill on camera.
 
 ## The "ask AI to tweak" loop — your best feature
 
-On a Needs-Reply draft, a small text box: *"Tell Sift how to change this"*.
+On a Needs-Reply draft, a prominent text box near the draft: *"Tell Sift how to change this"*.
 
 - User types e.g. "make it more formal" / "mention I'm out Friday" / "shorter".
 - Frontend sends `{ draft, instruction, email_id }` to a `/redraft` endpoint.
@@ -73,6 +75,8 @@ Demo-wise this is the moment that proves the agent takes correction like a real 
 - One re-draft per click — no auto-looping.
 - Keep the original thread context server-side so the tweak doesn't lose the plot.
 - Optional: a tiny "revert to original draft" link.
+
+**Versioning note:** the backend may keep an integer `version` for overwrite bookkeeping, but until the UI can navigate history, do **not** imply browsable draft history with visible "Version 1 / 2 / 3" chrome.
 
 ---
 
@@ -90,6 +94,7 @@ Demo-wise this is the moment that proves the agent takes correction like a real 
 - **Empty** — "No emails need a reply right now." Looks intentional, not broken.
 - **Error** — Gmail token expired → a clear "Reconnect Gmail" prompt (this *will* happen after 7 days in Testing mode).
 - **Draft generating** — spinner on the draft area while Qwen works.
+- **Primary actions always visible** — the Send / Archive controls stay on-screen in the detail pane via a sticky bottom bar.
 
 ---
 
