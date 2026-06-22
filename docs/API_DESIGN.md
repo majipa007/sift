@@ -1,5 +1,7 @@
 # Sift — API Design
 
+> For the concrete frontend-facing request/response shapes, see `API_CONTRACT.md`.
+
 FastAPI backend. Reflects the locked decisions:
 - **Classify-now, draft-later** — the trigger never drafts; drafts are made lazily when an Important email is opened.
 - **The trigger never waits for a human** — it classifies, routes, stores, and ends. Approval is a separate request later.

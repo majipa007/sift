@@ -1,5 +1,7 @@
 # Sift — Frontend Plan
 
+> For the exact backend payloads and frontend integration sequence, see `API_CONTRACT.md`.
+
 **Stack:** React (lightweight — Vite + plain React is plenty). No heavy state library needed.
 
 **Golden rule:** This is **not an email client.** It's a triage cockpit with exactly three actions. Resist every urge to add threading views, compose-from-scratch, folders, or search. Each one steals time from the agent, which is what's judged.
